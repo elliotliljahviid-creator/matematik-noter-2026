@@ -1,83 +1,84 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ellio Games</title>
+
   <style>
     :root {
-      --purple: #260740;
-      --purple-2: #3d1063;
-      --blue: #7f5cff;
-      --pink: #ff4fb3;
-      --card: #fff;
-      --text: #170b26;
+      --bg: #170227;
+      --panel: #2d074b;
+      --purple: #7f4dff;
+      --pink: #ff4eae;
+      --yellow: #ffd84d;
+      --white: #ffffff;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       color: white;
+      font-family: Arial, sans-serif;
       min-height: 100vh;
       background:
-        radial-gradient(circle at top right, #752bbb 0, transparent 28rem),
-        linear-gradient(135deg, var(--purple), #10031c);
+        radial-gradient(circle at 85% 0%, #6634a1 0, transparent 32rem),
+        linear-gradient(135deg, #12001f, var(--bg));
     }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 5;
       display: flex;
-      gap: 16px;
       align-items: center;
-      padding: 16px max(5vw, 20px);
-      background: rgba(20, 3, 35, .88);
+      gap: 18px;
+      padding: 16px 5%;
+      background: rgba(20, 1, 35, .9);
+      border-bottom: 1px solid #ffffff22;
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,.15);
     }
 
     .logo {
       font-size: 1.35rem;
       font-weight: 900;
+      letter-spacing: .5px;
       white-space: nowrap;
     }
 
-    .logo span { color: #ffcf44; }
+    .logo span { color: var(--yellow); }
 
     #search {
-      width: min(520px, 100%);
+      width: min(500px, 100%);
       margin-left: auto;
+      padding: 12px 17px;
       border: 0;
-      border-radius: 999px;
-      padding: 12px 18px;
-      font-size: 1rem;
+      border-radius: 99px;
       outline: none;
+      font-size: 1rem;
     }
 
     main {
       width: min(1400px, 92%);
-      margin: 40px auto;
+      margin: 35px auto;
     }
 
     .hero {
-      padding: 34px;
+      padding: 35px;
       border-radius: 24px;
-      background: linear-gradient(120deg, #7546ff, #ea3ca8);
-      box-shadow: 0 15px 45px #0007;
+      background: linear-gradient(120deg, #7545ef, #e8379d);
+      box-shadow: 0 15px 40px #0007;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(2rem, 6vw, 4rem);
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
     }
 
     .hero p {
-      margin-bottom: 0;
+      margin: 12px 0 0;
       font-size: 1.1rem;
-      opacity: .95;
     }
 
     .filters {
@@ -89,190 +90,671 @@
 
     .filter {
       cursor: pointer;
-      border: 1px solid #ffffff50;
-      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid #ffffff44;
+      border-radius: 99px;
       color: white;
-      background: #ffffff18;
-      padding: 9px 15px;
+      background: #ffffff16;
       font-weight: bold;
     }
 
     .filter:hover, .filter.active {
-      background: #ffcf44;
-      color: #25053b;
-      border-color: #ffcf44;
+      color: #250438;
+      border-color: var(--yellow);
+      background: var(--yellow);
     }
 
     .games {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
       gap: 16px;
     }
 
     .game {
-      display: block;
+      cursor: pointer;
       overflow: hidden;
-      border-radius: 15px;
-      text-decoration: none;
-      color: var(--text);
-      background: var(--card);
-      box-shadow: 0 8px 20px #0005;
+      padding: 0;
+      border: 0;
+      border-radius: 16px;
+      text-align: left;
+      color: #1c0b28;
+      background: white;
+      box-shadow: 0 8px 20px #0006;
+      font-family: inherit;
       transition: transform .18s, box-shadow .18s;
     }
 
     .game:hover {
       transform: translateY(-7px) scale(1.02);
-      box-shadow: 0 16px 28px #0008;
+      box-shadow: 0 17px 30px #0009;
     }
 
-    .game-art {
+    .art {
       display: grid;
       place-items: center;
-      height: 120px;
-      font-size: 4rem;
+      height: 125px;
+      font-size: 4.3rem;
       background: linear-gradient(135deg, var(--c1), var(--c2));
     }
 
     .game-info {
-      min-height: 77px;
-      padding: 11px;
+      padding: 12px;
     }
 
     .game-name {
       display: block;
-      font-weight: 800;
-      font-size: .95rem;
+      font-size: 1rem;
+      font-weight: 900;
     }
 
-    .game-site {
+    .game-type {
       display: block;
       margin-top: 5px;
-      color: #6d5d77;
-      font-size: .76rem;
+      color: #6f5b79;
+      font-size: .78rem;
     }
 
     #empty {
       display: none;
-      text-align: center;
       padding: 40px;
+      text-align: center;
       font-size: 1.2rem;
     }
 
-    footer {
-      padding: 30px;
+    /* Game player */
+    #player {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      padding: 18px;
+      background: #11001e;
+    }
+
+    #player.open {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .player-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      min-height: 48px;
+      padding-bottom: 14px;
+    }
+
+    .player-bar h2 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .back-button {
+      cursor: pointer;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 10px;
+      color: white;
+      background: var(--pink);
+      font-weight: bold;
+    }
+
+    #game-area {
+      display: grid;
+      flex: 1;
+      place-items: center;
+      overflow: auto;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at top, #47216c, #1a0629 75%);
+    }
+
+    canvas {
+      max-width: 95vw;
+      max-height: 73vh;
+      border: 4px solid #ffffff25;
+      border-radius: 12px;
+      background: #0a1020;
+    }
+
+    .game-box {
+      width: min(600px, 92%);
+      padding: 28px;
+      border-radius: 18px;
       text-align: center;
-      color: #d9cbe3;
+      color: #250438;
+      background: white;
+    }
+
+    .game-box h2 { margin-top: 0; }
+
+    .start-button {
+      cursor: pointer;
+      padding: 13px 22px;
+      border: 0;
+      border-radius: 10px;
+      color: #220333;
+      background: var(--yellow);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .score {
+      margin: 0 0 12px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .answer {
+      cursor: pointer;
+      padding: 17px;
+      border: 0;
+      border-radius: 12px;
+      color: white;
+      background: var(--purple);
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .answer:hover { background: var(--pink); }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 82px);
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .memory-card {
+      cursor: pointer;
+      width: 82px;
+      height: 82px;
+      border: 0;
+      border-radius: 12px;
+      color: white;
+      background: var(--purple);
+      font-size: 2.1rem;
+    }
+
+    .memory-card.open {
+      background: var(--yellow);
+    }
+
+    footer {
+      padding: 35px;
+      color: #dac9e8;
+      text-align: center;
     }
 
     @media (max-width: 600px) {
       header { flex-wrap: wrap; }
       #search { order: 3; margin-left: 0; }
-      main { margin-top: 22px; }
-      .hero { padding: 25px; }
+      .hero { padding: 26px; }
+      .memory-grid {
+        grid-template-columns: repeat(4, 63px);
+      }
+      .memory-card {
+        width: 63px;
+        height: 63px;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="logo">🎮 ELLIO <span>GAMES</span></div>
-    <input id="search" type="search" placeholder="Search games..." />
+    <input id="search" type="search" placeholder="Search your games...">
   </header>
 
   <main>
     <section class="hero">
-      <h1>Play something awesome.</h1>
-      <p>Choose a game below — every link opens the game on its official host website.</p>
+      <h1>Choose. Play. Win.</h1>
+      <p>All games are built into Ellio Games and stay on this website.</p>
     </section>
 
     <div class="filters">
       <button class="filter active" data-category="All">All games</button>
-      <button class="filter" data-category="Action">Action</button>
-      <button class="filter" data-category="Racing">Racing</button>
+      <button class="filter" data-category="Arcade">Arcade</button>
       <button class="filter" data-category="Puzzle">Puzzle</button>
-      <button class="filter" data-category="Sports">Sports</button>
-      <button class="filter" data-category="Strategy">Strategy</button>
+      <button class="filter" data-category="Math">Math</button>
+      <button class="filter" data-category="Action">Action</button>
     </div>
 
     <section class="games" id="games"></section>
-    <p id="empty">No games found. Try another search.</p>
+    <p id="empty">No game found. Try another search.</p>
   </main>
 
-  <footer>© 2026 Ellio Games · Games belong to their respective creators.</footer>
+  <section id="player">
+    <div class="player-bar">
+      <h2 id="player-title">Now Playing</h2>
+      <button class="back-button" onclick="closeGame()">✕ Back to menu</button>
+    </div>
+    <div id="game-area"></div>
+  </section>
+
+  <footer>© 2026 Ellio Games</footer>
 
   <script>
-    const games = [
-      ["Subway Surfers", "🏃", "Action", "Poki", "https://poki.com/en/g/subway-surfers"],
-      ["Temple Run 2", "🏛️", "Action", "Poki", "https://poki.com/en/g/temple-run-2"],
-      ["Stickman Hook", "🪝", "Action", "Poki", "https://poki.com/en/g/stickman-hook"],
-      ["Iron Snout", "🐷", "Action", "CrazyGames", "https://www.crazygames.com/game/iron-snout"],
-      ["Drive Mad", "🚗", "Racing", "Poki", "https://poki.com/en/g/drive-mad"],
-      ["Moto X3M", "🏍️", "Racing", "Poki", "https://poki.com/en/g/moto-x3m"],
-      ["Madalin Stunt Cars 3", "🏎️", "Racing", "CrazyGames", "https://www.crazygames.com/game/madalin-stunt-cars-3"],
-      ["Drift Hunters", "🚘", "Racing", "CrazyGames", "https://www.crazygames.com/game/drift-hunters"],
-      ["2048", "🔢", "Puzzle", "2048", "https://play2048.co/"],
-      ["Sudoku", "🧩", "Puzzle", "Sudoku.com", "https://sudoku.com/"],
-      ["Cut the Rope", "🍬", "Puzzle", "Poki", "https://poki.com/en/g/cut-the-rope"],
-      ["Fireboy and Watergirl", "🔥", "Puzzle", "Coolmath Games", "https://www.coolmathgames.com/0-fireboy-and-water-girl-in-the-forest-temple"],
-      ["Basketball Stars", "🏀", "Sports", "Poki", "https://poki.com/en/g/basketball-stars"],
-      ["Soccer Random", "⚽", "Sports", "Poki", "https://poki.com/en/g/soccer-random"],
-      ["8 Ball Pool", "🎱", "Sports", "CrazyGames", "https://www.crazygames.com/game/8-ball-billiards-classic"],
-      ["Chess", "♟️", "Strategy", "Chess.com", "https://www.chess.com/play/computer"],
-      ["Bloons Tower Defense", "🎈", "Strategy", "CrazyGames", "https://www.crazygames.com/game/bloons-tower-defense-3"],
-      ["Little Alchemy 2", "⚗️", "Puzzle", "Little Alchemy", "https://littlealchemy2.com/"],
-      ["Tetris", "🟪", "Puzzle", "Tetris", "https://tetris.com/play-tetris"],
-      ["Cookie Clicker", "🍪", "Strategy", "Orteil", "https://orteil.dashnet.org/cookieclicker/"],
-      ["Krunker", "🔫", "Action", "Krunker", "https://krunker.io/"],
-      ["Shell Shockers", "🥚", "Action", "Blue Wizard", "https://shellshock.io/"],
-      ["Agar.io", "🟢", "Action", "Agar.io", "https://agar.io/"],
-      ["Slither.io", "🐍", "Action", "Slither.io", "https://slither.io/"]
+    const gameList = [
+      { name: "Neon Snake", icon: "🐍", category: "Arcade", id: "snake" },
+      { name: "Dodge Dash", icon: "🚀", category: "Action", id: "dodge" },
+      { name: "Target Tapper", icon: "🎯", category: "Action", id: "tap" },
+      { name: "Math Rush", icon: "🔢", category: "Math", id: "math" },
+      { name: "Memory Match", icon: "🧠", category: "Puzzle", id: "memory" }
     ];
 
-    const colors = [
-      ["#ff4f81", "#ffbd59"], ["#4d8dff", "#56e0c2"],
-      ["#753bba", "#ea4aaa"], ["#f3862c", "#ef3f63"],
-      ["#3b62c4", "#56c7f0"], ["#4fbb69", "#d5d84a"]
+    const colours = [
+      ["#20c971", "#0b8ac9"],
+      ["#fa3c7f", "#893de8"],
+      ["#ff9b2f", "#ff4664"],
+      ["#2765e8", "#45d8bb"],
+      ["#7944d7", "#ef57b8"]
     ];
 
-    const gamesBox = document.getElementById("games");
+    const gamesElement = document.getElementById("games");
     const search = document.getElementById("search");
-    const empty = document.getElementById("empty");
     let selectedCategory = "All";
+    let animationId;
+    let gameTimer;
 
     function showGames() {
       const query = search.value.toLowerCase();
 
-      const shown = games.filter(game => {
-        const matchesCategory = selectedCategory === "All" || game[2] === selectedCategory;
-        const matchesSearch = game.join(" ").toLowerCase().includes(query);
-        return matchesCategory && matchesSearch;
-      });
+      const visibleGames = gameList.filter(game =>
+        (selectedCategory === "All" || game.category === selectedCategory) &&
+        game.name.toLowerCase().includes(query)
+      );
 
-      gamesBox.innerHTML = shown.map((game, index) => {
-        const color = colors[index % colors.length];
+      gamesElement.innerHTML = visibleGames.map((game, index) => {
+        const colour = colours[gameList.indexOf(game) % colours.length];
+
         return `
-          <a class="game" href="${game[4]}" target="_blank" rel="noopener noreferrer">
-            <div class="game-art" style="--c1:${color[0]}; --c2:${color[1]}">${game[1]}</div>
+          <button class="game" onclick="openGame('${game.id}', '${game.name}')">
+            <div class="art" style="--c1:${colour[0]}; --c2:${colour[1]}">${game.icon}</div>
             <div class="game-info">
-              <span class="game-name">${game[0]}</span>
-              <span class="game-site">${game[3]} · ${game[2]}</span>
+              <span class="game-name">${game.name}</span>
+              <span class="game-type">Ellio Games · ${game.category}</span>
             </div>
-          </a>
+          </button>
         `;
       }).join("");
 
-      empty.style.display = shown.length ? "none" : "block";
+      document.getElementById("empty").style.display =
+        visibleGames.length ? "none" : "block";
     }
 
     document.querySelectorAll(".filter").forEach(button => {
       button.addEventListener("click", () => {
         selectedCategory = button.dataset.category;
-        document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".filter").forEach(item =>
+          item.classList.remove("active")
+        );
         button.classList.add("active");
         showGames();
       });
     });
 
     search.addEventListener("input", showGames);
+
+    function openGame(game, title) {
+      cancelAnimationFrame(animationId);
+      clearInterval(gameTimer);
+
+      document.getElementById("player-title").textContent = "🎮 " + title;
+      document.getElementById("player").classList.add("open");
+      document.body.style.overflow = "hidden";
+
+      if (game === "snake") snakeGame();
+      if (game === "dodge") dodgeGame();
+      if (game === "tap") tapGame();
+      if (game === "math") mathGame();
+      if (game === "memory") memoryGame();
+    }
+
+    function closeGame() {
+      cancelAnimationFrame(animationId);
+      clearInterval(gameTimer);
+      document.getElementById("player").classList.remove("open");
+      document.getElementById("game-area").innerHTML = "";
+      document.body.style.overflow = "";
+    }
+
+    function snakeGame() {
+      const area = document.getElementById("game-area");
+      area.innerHTML = `
+        <div>
+          <p class="score" id="score">Score: 0</p>
+          <canvas id="canvas" width="600" height="600"></canvas>
+          <p style="text-align:center;color:white">Use arrow keys to move.</p>
+        </div>
+      `;
+
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const size = 30;
+      let snake = [{ x: 300, y: 300 }];
+      let food = { x: 150, y: 150 };
+      let direction = { x: 1, y: 0 };
+      let nextDirection = direction;
+      let score = 0;
+
+      function randomFood() {
+        food = {
+          x: Math.floor(Math.random() * 20) * size,
+          y: Math.floor(Math.random() * 20) * size
+        };
+      }
+
+      document.onkeydown = event => {
+        if (event.key === "ArrowUp" && direction.y === 0) nextDirection = { x: 0, y: -1 };
+        if (event.key === "ArrowDown" && direction.y === 0) nextDirection = { x: 0, y: 1 };
+        if (event.key === "ArrowLeft" && direction.x === 0) nextDirection = { x: -1, y: 0 };
+        if (event.key === "ArrowRight" && direction.x === 0) nextDirection = { x: 1, y: 0 };
+      };
+
+      function draw() {
+        direction = nextDirection;
+        const head = {
+          x: snake[0].x + direction.x * size,
+          y: snake[0].y + direction.y * size
+        };
+
+        const hitWall = head.x < 0 || head.x >= 600 || head.y < 0 || head.y >= 600;
+        const hitSnake = snake.some(part => part.x === head.x && part.y === head.y);
+
+        if (hitWall || hitSnake) {
+          clearInterval(gameTimer);
+          alert("Game over! Your score: " + score);
+          snakeGame();
+          return;
+        }
+
+        snake.unshift(head);
+
+        if (head.x === food.x && head.y === food.y) {
+          score++;
+          document.getElementById("score").textContent = "Score: " + score;
+          randomFood();
+        } else {
+          snake.pop();
+        }
+
+        ctx.fillStyle = "#09111e";
+        ctx.fillRect(0, 0, 600, 600);
+
+        ctx.fillStyle = "#ff4eae";
+        ctx.fillRect(food.x + 3, food.y + 3, size - 6, size - 6);
+
+        snake.forEach((part, index) => {
+          ctx.fillStyle = index === 0 ? "#ffd84d" : "#42e880";
+          ctx.fillRect(part.x + 3, part.y + 3, size - 6, size - 6);
+        });
+      }
+
+      gameTimer = setInterval(draw, 115);
+    }
+
+    function dodgeGame() {
+      const area = document.getElementById("game-area");
+      area.innerHTML = `
+        <div>
+          <p class="score" id="score">Score: 0</p>
+          <canvas id="canvas" width="600" height="600"></canvas>
+          <p style="text-align:center;color:white">Use ← and → to dodge meteors.</p>
+        </div>
+      `;
+
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      let player = { x: 270, y: 530, width: 60, height: 25 };
+      let keys = {};
+      let meteors = [];
+      let score = 0;
+      let running = true;
+
+      document.onkeydown = event => keys[event.key] = true;
+      document.onkeyup = event => keys[event.key] = false;
+
+      function update() {
+        if (!running) return;
+
+        if (keys["ArrowLeft"]) player.x -= 8;
+        if (keys["ArrowRight"]) player.x += 8;
+        player.x = Math.max(0, Math.min(540, player.x));
+
+        if (Math.random() < .045) {
+          meteors.push({
+            x: Math.random() * 560,
+            y: -30,
+            size: 22 + Math.random() * 25,
+            speed: 4 + Math.random() * 4
+          });
+        }
+
+        meteors.forEach(meteor => meteor.y += meteor.speed);
+        meteors = meteors.filter(meteor => meteor.y < 630);
+
+        for (const meteor of meteors) {
+          if (
+            meteor.x < player.x + player.width &&
+            meteor.x + meteor.size > player.x &&
+            meteor.y < player.y + player.height &&
+            meteor.y + meteor.size > player.y
+          ) {
+            running = false;
+            alert("You crashed! Score: " + score);
+            dodgeGame();
+            return;
+          }
+        }
+
+        score++;
+        document.getElementById("score").textContent = "Score: " + score;
+
+        ctx.fillStyle = "#07142c";
+        ctx.fillRect(0, 0, 600, 600);
+
+        ctx.fillStyle = "#fff";
+        for (let i = 0; i < 45; i++) {
+          ctx.fillRect((i * 79) % 600, (i * 131) % 600, 2, 2);
+        }
+
+        ctx.fillStyle = "#46e0ff";
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+
+        meteors.forEach(meteor => {
+          ctx.fillStyle = "#ff584d";
+          ctx.beginPath();
+          ctx.arc(meteor.x, meteor.y, meteor.size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        animationId = requestAnimationFrame(update);
+      }
+
+      update();
+    }
+
+    function tapGame() {
+      const area = document.getElementById("game-area");
+      area.innerHTML = `
+        <div class="game-box">
+          <h2>Target Tapper</h2>
+          <p>Click the target as many times as possible in 20 seconds.</p>
+          <h2 id="tap-score">Score: 0</h2>
+          <h3 id="tap-time">Time: 20</h3>
+          <div id="target-zone" style="position:relative;height:390px;border-radius:15px;background:#22103c;overflow:hidden"></div>
+          <br>
+          <button class="start-button" onclick="startTapGame()">Start game</button>
+        </div>
+      `;
+    }
+
+    function startTapGame() {
+      let score = 0;
+      let time = 20;
+      const zone = document.getElementById("target-zone");
+
+      function moveTarget() {
+        zone.innerHTML = "";
+        const target = document.createElement("button");
+        target.textContent = "🎯";
+        target.style.cssText = `
+          position:absolute; cursor:pointer; border:0; background:transparent;
+          font-size:3rem; left:${Math.random() * 80}%; top:${Math.random() * 75}%;
+        `;
+        target.onclick = () => {
+          score++;
+          document.getElementById("tap-score").textContent = "Score: " + score;
+          moveTarget();
+        };
+        zone.appendChild(target);
+      }
+
+      moveTarget();
+      clearInterval(gameTimer);
+
+      gameTimer = setInterval(() => {
+        time--;
+        document.getElementById("tap-time").textContent = "Time: " + time;
+
+        if (time <= 0) {
+          clearInterval(gameTimer);
+          zone.innerHTML = `<h2 style="color:white;padding-top:150px">Final score: ${score}</h2>`;
+        }
+      }, 1000);
+    }
+
+    function mathGame() {
+      const area = document.getElementById("game-area");
+      area.innerHTML = `
+        <div class="game-box">
+          <h2>Math Rush</h2>
+          <p>Answer correctly before the timer reaches zero.</p>
+          <h3 id="math-score">Score: 0</h3>
+          <h1 id="question">Press Start!</h1>
+          <div class="answers" id="answers"></div>
+          <br>
+          <button class="start-button" onclick="startMathGame()">Start game</button>
+        </div>
+      `;
+    }
+
+    function startMathGame() {
+      let score = 0;
+
+      function newQuestion() {
+        const first = Math.floor(Math.random() * 15) + 1;
+        const second = Math.floor(Math.random() * 15) + 1;
+        const correct = first + second;
+        let answers = [correct];
+
+        while (answers.length < 4) {
+          const wrong = correct + Math.floor(Math.random() * 15) - 7;
+          if (!answers.includes(wrong) && wrong >= 0) answers.push(wrong);
+        }
+
+        answers.sort(() => Math.random() - .5);
+        document.getElementById("question").textContent = `${first} + ${second} = ?`;
+
+        document.getElementById("answers").innerHTML = answers.map(answer =>
+          `<button class="answer" onclick="checkAnswer(${answer}, ${correct})">${answer}</button>`
+        ).join("");
+      }
+
+      window.checkAnswer = (answer, correct) => {
+        if (answer === correct) {
+          score++;
+          document.getElementById("math-score").textContent = "Score: " + score;
+          newQuestion();
+        } else {
+          alert("Not quite! Final score: " + score);
+          score = 0;
+          document.getElementById("math-score").textContent = "Score: 0";
+          newQuestion();
+        }
+      };
+
+      window.newQuestion = newQuestion;
+      newQuestion();
+    }
+
+    function memoryGame() {
+      const area = document.getElementById("game-area");
+      const icons = ["🚀", "🐸", "🍕", "👑", "🚀", "🐸", "🍕", "👑"];
+      icons.sort(() => Math.random() - .5);
+
+      area.innerHTML = `
+        <div class="game-box">
+          <h2>Memory Match</h2>
+          <p>Find all matching pairs.</p>
+          <h3 id="memory-score">Pairs found: 0 / 4</h3>
+          <div class="memory-grid" id="memory-grid"></div>
+          <br>
+          <button class="start-button" onclick="memoryGame()">New game</button>
+        </div>
+      `;
+
+      let firstCard = null;
+      let locked = false;
+      let pairs = 0;
+      const grid = document.getElementById("memory-grid");
+
+      icons.forEach((icon, index) => {
+        const card = document.createElement("button");
+        card.className = "memory-card";
+        card.dataset.icon = icon;
+        card.dataset.index = index;
+        card.textContent = "❔";
+
+        card.onclick = () => {
+          if (locked || card.classList.contains("open")) return;
+
+          card.textContent = card.dataset.icon;
+          card.classList.add("open");
+
+          if (!firstCard) {
+            firstCard = card;
+            return;
+          }
+
+          if (firstCard.dataset.icon === card.dataset.icon) {
+            pairs++;
+            document.getElementById("memory-score").textContent =
+              `Pairs found: ${pairs} / 4`;
+
+            firstCard = null;
+
+            if (pairs === 4) {
+              setTimeout(() => alert("You won! 🎉"), 250);
+            }
+          } else {
+            locked = true;
+            setTimeout(() => {
+              firstCard.textContent = "❔";
+              firstCard.classList.remove("open");
+              card.textContent = "❔";
+              card.classList.remove("open");
+              firstCard = null;
+              locked = false;
+            }, 700);
+          }
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
     showGames();
   </script>
 </body>

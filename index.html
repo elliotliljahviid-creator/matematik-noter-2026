@@ -2,9 +2,8 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <!-- Dette ændrer ikonet på fanen til Google Drive -->
+    <!-- Gør at fanen ligner Google Drive -->
     <link rel="icon" type="image/png" href="https://gstatic.com">
-    <!-- Dette ændrer teksten på fanen -->
     <title>Google Drev - Mit drev</title>
     
     <style>
@@ -16,10 +15,37 @@
             margin: 0;
             padding: 20px;
         }
-        h1 { font-size: 24px; color: #555; }
+        h1 { font-size: 24px; color: #444; margin-bottom: 5px; }
+        p { color: #666; font-size: 14px; margin-top: 0; }
+        
+        /* Menu til spilknapper */
+        .menu {
+            margin: 20px auto;
+        }
+        .spil-knap {
+            background-color: #2a2a2a;
+            color: white;
+            border: 2px solid #444;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: 0.2s;
+        }
+        .spil-knap:hover {
+            background-color: #3e3e3e;
+            border-color: #666;
+        }
+        .spil-knap.aktiv {
+            background-color: #0078d4;
+            border-color: #005a9e;
+        }
+
+        /* Container til spillet */
         .spil-boks {
             margin: 20px auto;
-            width: 90%;
+            width: 95%;
             max-width: 900px;
             background: #222;
             padding: 10px;
@@ -31,18 +57,43 @@
             height: 600px;
             border: none;
             border-radius: 5px;
+            background-color: #000;
         }
     </style>
 </head>
 <body>
 
     <h1>Matematik Aflevering - Projekt filer</h1>
-    <p>(Dette er en skjult spilside. Kig op på din browser-fane!)</p>
+    <p>(Camouflage aktiveret: Kig op på din browser-fane)</p>
 
-    <div class="spil-boks">
-        <!-- Her indlæser vi et gratis retro Slangespil -->
-        "https://enclavegames.com"
+    <!-- Knapper til at skifte spil -->
+    <div class="menu">
+        <button class="spil-knap aktiv" onclick="skiftSpil('https://enclavegames.com', this)">🐍 Snake</button>
+        <button class="spil-knap" onclick="skiftSpil('https://enclavegames.com', this)">🧱 Tetris</button>
+        <button class="spil-knap" onclick="skiftSpil('https://enclavegames.com', this)">🐦 Flappy Bird</button>
     </div>
+
+    <!-- Her indlæses spillet (starter med fungerende Snake) -->
+    <div class="spil-boks">
+        <iframe id="spil-vindue" src="https://enclavegames.com"></iframe>
+    </div>
+
+    <script>
+        // Funktion der skifter spillet i din iframe, når man trykker på en knap
+        function skiftSpil(spilUrl, knap) {
+            // Skift linket i iframen
+            document.getElementById('spil-vindue').src = spilUrl;
+            
+            // Fjern 'aktiv' farven fra alle knapper
+            let knapper = document.getElementsByClassName('spil-knap');
+            for (let i = 0; i < knapper.length; i++) {
+                knapper[i].classList.remove('aktiv');
+            }
+            
+            // Giv den klikkede knap den 'aktive' blå farve
+            knap.classList.add('aktiv');
+        }
+    </script>
 
 </body>
 </html>

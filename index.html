@@ -1,99 +1,279 @@
-<!DOCTYPE html>
-<html lang="da">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!-- Gør at fanen ligner Google Drive -->
-    <link rel="icon" type="image/png" href="https://gstatic.com">
-    <title>Google Drev - Mit drev</title>
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: white;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 { font-size: 24px; color: #444; margin-bottom: 5px; }
-        p { color: #666; font-size: 14px; margin-top: 0; }
-        
-        /* Menu til spilknapper */
-        .menu {
-            margin: 20px auto;
-        }
-        .spil-knap {
-            background-color: #2a2a2a;
-            color: white;
-            border: 2px solid #444;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 0 5px;
-            transition: 0.2s;
-        }
-        .spil-knap:hover {
-            background-color: #3e3e3e;
-            border-color: #666;
-        }
-        .spil-knap.aktiv {
-            background-color: #0078d4;
-            border-color: #005a9e;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ellio Games</title>
+  <style>
+    :root {
+      --purple: #260740;
+      --purple-2: #3d1063;
+      --blue: #7f5cff;
+      --pink: #ff4fb3;
+      --card: #fff;
+      --text: #170b26;
+    }
 
-        /* Container til spillet */
-        .spil-boks {
-            margin: 20px auto;
-            width: 95%;
-            max-width: 900px;
-            background: #222;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 5px;
-            background-color: #000;
-        }
-    </style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, #752bbb 0, transparent 28rem),
+        linear-gradient(135deg, var(--purple), #10031c);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px max(5vw, 20px);
+      background: rgba(20, 3, 35, .88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.15);
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .logo span { color: #ffcf44; }
+
+    #search {
+      width: min(520px, 100%);
+      margin-left: auto;
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    main {
+      width: min(1400px, 92%);
+      margin: 40px auto;
+    }
+
+    .hero {
+      padding: 34px;
+      border-radius: 24px;
+      background: linear-gradient(120deg, #7546ff, #ea3ca8);
+      box-shadow: 0 15px 45px #0007;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+    }
+
+    .hero p {
+      margin-bottom: 0;
+      font-size: 1.1rem;
+      opacity: .95;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0;
+    }
+
+    .filter {
+      cursor: pointer;
+      border: 1px solid #ffffff50;
+      border-radius: 999px;
+      color: white;
+      background: #ffffff18;
+      padding: 9px 15px;
+      font-weight: bold;
+    }
+
+    .filter:hover, .filter.active {
+      background: #ffcf44;
+      color: #25053b;
+      border-color: #ffcf44;
+    }
+
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 16px;
+    }
+
+    .game {
+      display: block;
+      overflow: hidden;
+      border-radius: 15px;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--card);
+      box-shadow: 0 8px 20px #0005;
+      transition: transform .18s, box-shadow .18s;
+    }
+
+    .game:hover {
+      transform: translateY(-7px) scale(1.02);
+      box-shadow: 0 16px 28px #0008;
+    }
+
+    .game-art {
+      display: grid;
+      place-items: center;
+      height: 120px;
+      font-size: 4rem;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+    }
+
+    .game-info {
+      min-height: 77px;
+      padding: 11px;
+    }
+
+    .game-name {
+      display: block;
+      font-weight: 800;
+      font-size: .95rem;
+    }
+
+    .game-site {
+      display: block;
+      margin-top: 5px;
+      color: #6d5d77;
+      font-size: .76rem;
+    }
+
+    #empty {
+      display: none;
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+    }
+
+    footer {
+      padding: 30px;
+      text-align: center;
+      color: #d9cbe3;
+    }
+
+    @media (max-width: 600px) {
+      header { flex-wrap: wrap; }
+      #search { order: 3; margin-left: 0; }
+      main { margin-top: 22px; }
+      .hero { padding: 25px; }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="logo">🎮 ELLIO <span>GAMES</span></div>
+    <input id="search" type="search" placeholder="Search games..." />
+  </header>
 
-    <h1>Matematik Aflevering - Projekt filer</h1>
-    <p>(Camouflage aktiveret: Kig op på din browser-fane)</p>
+  <main>
+    <section class="hero">
+      <h1>Play something awesome.</h1>
+      <p>Choose a game below — every link opens the game on its official host website.</p>
+    </section>
 
-    <!-- Knapper til at skifte spil -->
-    <div class="menu">
-        <button class="spil-knap aktiv" onclick="skiftSpil('https://enclavegames.com', this)">🐍 Snake</button>
-        <button class="spil-knap" onclick="skiftSpil('https://enclavegames.com', this)">🧱 Tetris</button>
-        <button class="spil-knap" onclick="skiftSpil('https://enclavegames.com', this)">🐦 Flappy Bird</button>
+    <div class="filters">
+      <button class="filter active" data-category="All">All games</button>
+      <button class="filter" data-category="Action">Action</button>
+      <button class="filter" data-category="Racing">Racing</button>
+      <button class="filter" data-category="Puzzle">Puzzle</button>
+      <button class="filter" data-category="Sports">Sports</button>
+      <button class="filter" data-category="Strategy">Strategy</button>
     </div>
 
-    <!-- Her indlæses spillet (starter med fungerende Snake) -->
-    <div class="spil-boks">
-        <iframe id="spil-vindue" src="https://enclavegames.com"></iframe>
-    </div>
+    <section class="games" id="games"></section>
+    <p id="empty">No games found. Try another search.</p>
+  </main>
 
-    <script>
-        // Funktion der skifter spillet i din iframe, når man trykker på en knap
-        function skiftSpil(spilUrl, knap) {
-            // Skift linket i iframen
-            document.getElementById('spil-vindue').src = spilUrl;
-            
-            // Fjern 'aktiv' farven fra alle knapper
-            let knapper = document.getElementsByClassName('spil-knap');
-            for (let i = 0; i < knapper.length; i++) {
-                knapper[i].classList.remove('aktiv');
-            }
-            
-            // Giv den klikkede knap den 'aktive' blå farve
-            knap.classList.add('aktiv');
-        }
-    </script>
+  <footer>© 2026 Ellio Games · Games belong to their respective creators.</footer>
 
+  <script>
+    const games = [
+      ["Subway Surfers", "🏃", "Action", "Poki", "https://poki.com/en/g/subway-surfers"],
+      ["Temple Run 2", "🏛️", "Action", "Poki", "https://poki.com/en/g/temple-run-2"],
+      ["Stickman Hook", "🪝", "Action", "Poki", "https://poki.com/en/g/stickman-hook"],
+      ["Iron Snout", "🐷", "Action", "CrazyGames", "https://www.crazygames.com/game/iron-snout"],
+      ["Drive Mad", "🚗", "Racing", "Poki", "https://poki.com/en/g/drive-mad"],
+      ["Moto X3M", "🏍️", "Racing", "Poki", "https://poki.com/en/g/moto-x3m"],
+      ["Madalin Stunt Cars 3", "🏎️", "Racing", "CrazyGames", "https://www.crazygames.com/game/madalin-stunt-cars-3"],
+      ["Drift Hunters", "🚘", "Racing", "CrazyGames", "https://www.crazygames.com/game/drift-hunters"],
+      ["2048", "🔢", "Puzzle", "2048", "https://play2048.co/"],
+      ["Sudoku", "🧩", "Puzzle", "Sudoku.com", "https://sudoku.com/"],
+      ["Cut the Rope", "🍬", "Puzzle", "Poki", "https://poki.com/en/g/cut-the-rope"],
+      ["Fireboy and Watergirl", "🔥", "Puzzle", "Coolmath Games", "https://www.coolmathgames.com/0-fireboy-and-water-girl-in-the-forest-temple"],
+      ["Basketball Stars", "🏀", "Sports", "Poki", "https://poki.com/en/g/basketball-stars"],
+      ["Soccer Random", "⚽", "Sports", "Poki", "https://poki.com/en/g/soccer-random"],
+      ["8 Ball Pool", "🎱", "Sports", "CrazyGames", "https://www.crazygames.com/game/8-ball-billiards-classic"],
+      ["Chess", "♟️", "Strategy", "Chess.com", "https://www.chess.com/play/computer"],
+      ["Bloons Tower Defense", "🎈", "Strategy", "CrazyGames", "https://www.crazygames.com/game/bloons-tower-defense-3"],
+      ["Little Alchemy 2", "⚗️", "Puzzle", "Little Alchemy", "https://littlealchemy2.com/"],
+      ["Tetris", "🟪", "Puzzle", "Tetris", "https://tetris.com/play-tetris"],
+      ["Cookie Clicker", "🍪", "Strategy", "Orteil", "https://orteil.dashnet.org/cookieclicker/"],
+      ["Krunker", "🔫", "Action", "Krunker", "https://krunker.io/"],
+      ["Shell Shockers", "🥚", "Action", "Blue Wizard", "https://shellshock.io/"],
+      ["Agar.io", "🟢", "Action", "Agar.io", "https://agar.io/"],
+      ["Slither.io", "🐍", "Action", "Slither.io", "https://slither.io/"]
+    ];
+
+    const colors = [
+      ["#ff4f81", "#ffbd59"], ["#4d8dff", "#56e0c2"],
+      ["#753bba", "#ea4aaa"], ["#f3862c", "#ef3f63"],
+      ["#3b62c4", "#56c7f0"], ["#4fbb69", "#d5d84a"]
+    ];
+
+    const gamesBox = document.getElementById("games");
+    const search = document.getElementById("search");
+    const empty = document.getElementById("empty");
+    let selectedCategory = "All";
+
+    function showGames() {
+      const query = search.value.toLowerCase();
+
+      const shown = games.filter(game => {
+        const matchesCategory = selectedCategory === "All" || game[2] === selectedCategory;
+        const matchesSearch = game.join(" ").toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      gamesBox.innerHTML = shown.map((game, index) => {
+        const color = colors[index % colors.length];
+        return `
+          <a class="game" href="${game[4]}" target="_blank" rel="noopener noreferrer">
+            <div class="game-art" style="--c1:${color[0]}; --c2:${color[1]}">${game[1]}</div>
+            <div class="game-info">
+              <span class="game-name">${game[0]}</span>
+              <span class="game-site">${game[3]} · ${game[2]}</span>
+            </div>
+          </a>
+        `;
+      }).join("");
+
+      empty.style.display = shown.length ? "none" : "block";
+    }
+
+    document.querySelectorAll(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        selectedCategory = button.dataset.category;
+        document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+        showGames();
+      });
+    });
+
+    search.addEventListener("input", showGames);
+    showGames();
+  </script>
 </body>
 </html>
